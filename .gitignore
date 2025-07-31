@@ -46,3 +46,4 @@ yarn-error.log*
 next-env.d.ts
 db.json
 cypress/db/test-db.json
+test-results/.last-run.json

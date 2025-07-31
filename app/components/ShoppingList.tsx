@@ -7,6 +7,7 @@ import AddItemButton from "./AddItemButton";
 import Modal from "./Modal";
 import AddItemForm from "./AddItemForm";
 import { v4 as uuid } from 'uuid';
+import { Reorder } from "motion/react"
 
 export default function ShoppingList() {
 
@@ -17,7 +18,11 @@ export default function ShoppingList() {
         const loadItems = async () => {
             try {
                 const data = await shoppingListApi.getAllItems();
-                setItems(data);
+                const itemsWithOrder = data.map((item, index) => ({
+                    ...item,
+                    order: item.order ?? index
+                })).sort((a, b) => a.order - b.order);
+                setItems(itemsWithOrder);
             } catch (error) {
                 console.error('Failed to load items:', error);
             }
@@ -31,6 +36,7 @@ export default function ShoppingList() {
             name,
             price,
             purchased: false,
+            order: items.length,
         };
 
         setItems(prevItems => [...prevItems, newItem]);
@@ -47,8 +53,6 @@ export default function ShoppingList() {
     };
 
     const handleDelete = async (id: string) => {
-        const itemToDelete = items.find(item => item.id === id);
-        const index = items.findIndex(item => item.id === id);
         setItems(prevItems => prevItems.filter(item => item.id !== id));
         await shoppingListApi.deleteItem(id);
     };
@@ -62,14 +66,27 @@ export default function ShoppingList() {
         await shoppingListApi.togglePurchased(item);
     };
 
+    const handleReorder = async (reorderedItems: ShoppingItemType[]) => {
+        const itemsWithUpdatedOrder = reorderedItems.map((item, index) => ({
+            ...item,
+            order: index
+        }));
+
+        setItems(itemsWithUpdatedOrder);
+
+        await shoppingListApi.reorderItems(itemsWithUpdatedOrder);
+    };
+
     return (
         <>
             <h1 className="text-4xl font-bold pb-8 text-center">Shopping List</h1>
-            <ul aria-label="Shopping List">
+            <Reorder.Group aria-label="Shopping List" values={items} onReorder={handleReorder}>
                 {items.map(item => (
-                    <ShoppingItem key={item.id} item={item} onDelete={handleDelete} onTogglePurchased={handleTogglePurchased} />
+                    <Reorder.Item key={item.id} value={item} className="flex items-center justify-between p-1 border-b last:border-b-0">
+                        <ShoppingItem item={item} onDelete={handleDelete} onTogglePurchased={handleTogglePurchased} />
+                    </Reorder.Item>
                 ))}
-            </ul>
+            </Reorder.Group>
             <AddItemButton openModal={() => setShowModal(true)} />
             {showModal &&
                 <Modal onClose={handleCloseModal}>

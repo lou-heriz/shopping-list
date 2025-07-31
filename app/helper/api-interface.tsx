@@ -63,6 +63,13 @@ class ShoppingListApi {
         const updatedItem = { ...item, purchased: !item.purchased };
         return this.updateItem(updatedItem);
     }
+
+    async reorderItems(items: ShoppingItemType[]): Promise<{ success: boolean; items: ShoppingItemType[] }> {
+        return this.makeRequest<{ success: boolean; items: ShoppingItemType[] }>('/api/shopping-list', {
+            method: 'POST',
+            body: JSON.stringify(items),
+        });
+    }
 }
 
 export const shoppingListApi = ShoppingListApi.getInstance();

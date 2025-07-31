@@ -3,4 +3,5 @@ export type ShoppingItemType = {
     name: string;
     price: number;
     purchased: boolean;
+    order: number;
 };

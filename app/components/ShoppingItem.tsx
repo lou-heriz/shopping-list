@@ -10,7 +10,7 @@ interface ShoppingItemProps {
 
 export default function ShoppingItem({ item, onDelete, onTogglePurchased }: ShoppingItemProps) {
     return (
-        <li className="flex items-center justify-between p-1 border-b last:border-b-0">
+        <>
             <div className="flex items-center gap-3 w-full justify-between flex-1">
                 <label
                     htmlFor={`purchased-checkbox-${item.name}`}
@@ -33,6 +33,6 @@ export default function ShoppingItem({ item, onDelete, onTogglePurchased }: Shop
                 </span>
             </div>
             <DeleteButton buttonId={`delete-button-${item.id}`} onDelete={() => onDelete(item.id)} />
-        </li>
+        </>
     );
 }
