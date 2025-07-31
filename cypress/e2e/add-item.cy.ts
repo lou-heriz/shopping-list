@@ -1,3 +1,5 @@
+import { shoppingListApi } from '../../app/helper/api-interface';
+
 const closeModalIfOpen = () => {
     if (Cypress.$('.fixed.inset-0').length > 0) {
         cy.get('.fixed.inset-0').click('topLeft')
@@ -7,6 +9,8 @@ const closeModalIfOpen = () => {
 describe('Add Item', () => {
 
     beforeEach(() => {
+        cy.task('resetDatabase')
+        cy.wait(250)
         cy.visit('/')
     })
 

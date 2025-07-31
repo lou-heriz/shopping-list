@@ -10,13 +10,14 @@
     "lint": "next lint",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "set LOWDB_PATH=test-db.json&& start-server-and-test dev http://localhost:3000 cypress:run",
-    "test:coverage": "set LOWDB_PATH=test-db.json&& start-server-and-test dev:coverage http://localhost:3000 \"cypress run && nyc report\"",
+    "test": "set LOWDB_PATH=./cypress/db/test-db.json&& start-server-and-test dev http://localhost:3000 cypress:run",
+    "test:coverage": "set LOWDB_PATH=./cypress/db/test-db.json&& start-server-and-test dev:coverage http://localhost:3000 \"cypress run && nyc report\"",
     "coverage:report": "nyc report --reporter=html --reporter=text",
     "coverage:open": "start coverage/index.html"
   },
   "dependencies": {
     "@babel/runtime": "^7.28.2",
+    "lowdb": "^7.0.1",
     "next": "15.4.4",
     "react": "19.1.0",
     "react-dom": "19.1.0"

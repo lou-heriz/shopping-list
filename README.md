@@ -31,3 +31,7 @@ The app will use Next.js for easy running of client/server, cypress for integrat
 
 ### Tooling used
 Github Copilot (code completion, tailwind css generation)
+
+### Known issues
+- The cypress tests all have a short wait added beforehand as I was not able to get the test db reset properly without occasionally encountering a race condition
+- ShoppingList handlers optimistically update state without any rollback in case of an error in the api request

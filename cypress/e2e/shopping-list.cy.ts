@@ -1,6 +1,10 @@
+import { shoppingListApi } from "../../app/helper/api-interface";
+
 describe('Shopping List App', () => {
 
     beforeEach(() => {
+        cy.task('resetDatabase')
+        cy.wait(250)
         cy.visit('/')
     })
 
