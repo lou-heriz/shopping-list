@@ -29,6 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "babel-plugin-istanbul": "^7.0.0",
     "cypress": "^14.5.3",
     "eslint": "^9",

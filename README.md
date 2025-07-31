@@ -26,5 +26,8 @@ Before starting I have already set up a skeleton app with code coverage report v
 
 You can check the coverage report by running `npm run test:coverage`
 
+### Stack
+The app will use Next.js for easy running of client/server, cypress for integration testing and Lowdb as the data layer (if required). 
+
 ### Tooling used
 Github Copilot (code completion, tailwind css generation)
