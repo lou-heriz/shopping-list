@@ -37,12 +37,16 @@ export default function ShoppingList() {
         setShowModal(false);
     };
 
+    const handleDelete = async (id: string) => {
+        setItems(prevItems => prevItems.filter(item => item.id !== id));
+    };
+
     return (
         <>
             <h1 className="text-4xl font-bold pb-8 text-center">Shopping List</h1>
             <ul aria-label="Shopping List">
                 {items.map(item => (
-                    <ShoppingItem key={item.id} item={item} />
+                    <ShoppingItem key={item.id} item={item} onDelete={handleDelete} />
                 ))}
             </ul>
             <AddItemButton openModal={() => setShowModal(true)} />
