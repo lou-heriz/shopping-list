@@ -25,3 +25,6 @@ As a result the goal is to complete stories 1-7 within the 6 hours.
 Before starting I have already set up a skeleton app with code coverage report via cypress. 
 
 You can check the coverage report by running `npm run test:coverage`
+
+### Tooling used
+Github Copilot (code completion, tailwind css generation)
