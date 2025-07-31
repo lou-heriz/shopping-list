@@ -80,6 +80,11 @@ export default function ShoppingList() {
     return (
         <>
             <h1 className="text-4xl font-bold pb-8 text-center">Shopping List</h1>
+            <div className="mb-4 p-4 bg-gray-50 rounded-lg items-center flex flex-col gap-2">
+                <div className="flex justify-between items-center text-lg">
+                    Total Cost: £{items.reduce((total, item) => total + item.price, 0).toFixed(2)}
+                </div>
+            </div>
             <Reorder.Group aria-label="Shopping List" values={items} onReorder={handleReorder}>
                 {items.map(item => (
                     <Reorder.Item key={item.id} value={item} className="flex items-center justify-between p-1 border-b last:border-b-0">

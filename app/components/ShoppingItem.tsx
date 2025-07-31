@@ -29,7 +29,7 @@ export default function ShoppingItem({ item, onDelete, onTogglePurchased }: Shop
                 </label>
                 <span className={`flex items-center justify-between flex-1 ${item.purchased ? 'line-through text-gray-500' : ''}`}>
                     <span className="font-semibold">{item.name}</span>
-                    <span className="font-medium">£{item.price.toFixed(2)}</span>
+                    <span data-testid="item-price" className="font-medium">£{item.price.toFixed(2)}</span>
                 </span>
             </div>
             <DeleteButton buttonId={`delete-button-${item.id}`} onDelete={() => onDelete(item.id)} />
