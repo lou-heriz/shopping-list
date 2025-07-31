@@ -36,3 +36,9 @@ Github Copilot (code completion, tailwind css generation)
 - The cypress tests all have a short wait added beforehand as I was not able to get the test db reset properly without occasionally encountering a race condition
 - ShoppingList handlers optimistically update state without any rollback in case of an error in the api request
 - Was not able to make a drag & drop work in cypress due to its click events being simulated, so a separate test is written in playwright. This can be run with 'npm run test:playwright' while the dev server is running, but it does run against the 'real' db instead of the test db. I think this can be fixed quickly by setting the process.env var when starting up the server for the playwright test, but I was running out of time so left this for now.
+
+### Post-mortem 
+Unfortunately I spent a long time in areas that I shouldn't have (in particular trying to get drag & drop testing working with cypress, and styling the add item form) and didn't leave myself enough time to ensure testing coverage was more complete. There are missing test cases for error handling and the existing tests are not all consistent. 
+Since I ended up rushing I also didn't extract components out properly and the ShoppingList component became a bit unwieldy. 
+
+On the plus side, I think the stack mostly made sense for the assessment (maybe with the exception of Lowdb), and despite not being happy with the condition of the tests I did manage to mostly finish the 7 stories I set out to complete. 
