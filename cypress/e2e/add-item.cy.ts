@@ -73,7 +73,7 @@ describe('Add Item', () => {
         cy.contains("Test Item").should('be.visible');
         cy.get('button').contains('+ Add Item').click();
         cy.get('input[name="name"]').should('have.value', '');
-        cy.get('div[id="add-item-form-price"]').should('have.text', '£1.00');
+        cy.get('span[id="add-item-form-price"]').should('have.text', '£1.00');
     });
 
     it('should focus on name input when form opens', () => {

@@ -37,7 +37,7 @@ export default function AddItemForm({ onSubmit, onCancel }: AddItemFormProps) {
             </div>
 
             <div>
-                <label className="text-sm text-gray-600">Price</label>
+                <label id="price-label" className="text-sm text-gray-600">Price</label>
                 <div className="flex items-center justify-between">
                     <button
                         aria-label="Decrement price"
@@ -49,9 +49,9 @@ export default function AddItemForm({ onSubmit, onCancel }: AddItemFormProps) {
                     >
                         −
                     </button>
-                    <div id="add-item-form-price" aria-label="Item price" className="px-4 py-2 rounded text-center min-w-20">
+                    <span id="add-item-form-price" role="status" aria-live="polite" aria-labelledby="price-label" className="px-4 py-2 rounded text-center min-w-20">
                         £{price.toFixed(2)}
-                    </div>
+                    </span>
                     <button
                         aria-label="Increment price"
                         id="increment-button"
@@ -69,7 +69,7 @@ export default function AddItemForm({ onSubmit, onCancel }: AddItemFormProps) {
                     type="button"
                     onClick={onCancel}
                     className="text-sm text-gray-600 underline px-4 py-2"
-                    aria-label="Close add item form"
+                    aria-label="Cancel adding item"
                 >
                     Cancel
                 </button>
