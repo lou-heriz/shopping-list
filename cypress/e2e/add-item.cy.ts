@@ -1,4 +1,5 @@
 import { shoppingListApi } from '../../app/helper/api-interface';
+import { ShoppingListHelpers } from '../support/helpers';
 
 const closeModalIfOpen = () => {
     if (Cypress.$('.fixed.inset-0').length > 0) {
@@ -55,24 +56,14 @@ describe('Add Item', () => {
     })
 
     it('should add a new item when form is submitted with valid data', () => {
-        cy.get('button').contains('+ Add Item').click();
-        cy.get('form').should('be.visible');
-        cy.get('input[name="name"]').should('be.visible');
-        cy.get('input[name="name"]').type("Test Item");
-        cy.get('button[id="increment-button"]').click();
-        cy.get('button[type="submit"]').click();
+        ShoppingListHelpers.addItem("Test Item", 1.5);
         cy.get('form').should('not.exist');
         cy.contains("Test Item").should('be.visible');
         cy.contains('£1.50').should('be.visible');
     });
 
     it('should clear form after successful submission', () => {
-        cy.get('button').contains('+ Add Item').click();
-        cy.get('form').should('be.visible');
-        cy.get('input[name="name"]').should('be.visible');
-        cy.get('input[name="name"]').type("Test Item");
-        cy.get('button[id="increment-button"]').click();
-        cy.get('button[type="submit"]').click();
+        ShoppingListHelpers.addItem("Test Item", 1.5);
         cy.get('form').should('not.exist');
         cy.contains("Test Item").should('be.visible');
         cy.get('button').contains('+ Add Item').click();
