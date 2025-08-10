@@ -1,14 +1,11 @@
 'use client';
+import { useListActions } from "../provider/ListContext";
 import { ShoppingItemType } from "../types";
 import DeleteButton from "./DeleteButton";
 
-interface ShoppingItemProps {
-    item: ShoppingItemType;
-    onDelete: (id: string) => void;
-    onTogglePurchased: (id: string) => void;
-}
+export default function ShoppingItem({ item }: { item: ShoppingItemType }) {
+    const { handleDelete, handleTogglePurchased } = useListActions();
 
-export default function ShoppingItem({ item, onDelete, onTogglePurchased }: ShoppingItemProps) {
     return (
         <>
             <div className="flex items-center gap-3 w-full justify-between flex-1">
@@ -22,7 +19,7 @@ export default function ShoppingItem({ item, onDelete, onTogglePurchased }: Shop
                         name="purchased"
                         type="checkbox"
                         checked={item.purchased}
-                        onChange={() => onTogglePurchased(item.id)}
+                        onChange={() => handleTogglePurchased(item.id)}
                         className="w-5 h-5 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                     />
                     <span className="sr-only">Mark item as purchased</span>
@@ -32,7 +29,7 @@ export default function ShoppingItem({ item, onDelete, onTogglePurchased }: Shop
                     <span data-testid="item-price" className="font-medium">£{item.price.toFixed(2)}</span>
                 </span>
             </div>
-            <DeleteButton buttonId={`delete-button-${item.id}`} onDelete={() => onDelete(item.id)} />
+            <DeleteButton buttonId={`delete-button-${item.id}`} onDelete={() => handleDelete(item.id)} />
         </>
     );
 }

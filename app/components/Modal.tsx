@@ -1,14 +1,12 @@
-interface ModalProps {
-    onClose: () => void;
-    children: React.ReactNode;
-}
+import { useListActions } from "../provider/ListContext";
 
-export default function Modal({ onClose, children }: ModalProps) {
+export default function Modal({ children }: { children: React.ReactNode }) {
+    const { closeModal } = useListActions();
     return (
         <div
             className="fixed inset-0 flex items-center justify-center z-50"
             style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
-            onClick={onClose}
+            onClick={closeModal}
         >
             <div
                 className="bg-white rounded shadow-lg p-6 w-80% mx-auto"
