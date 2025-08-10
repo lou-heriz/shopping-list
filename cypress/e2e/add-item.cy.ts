@@ -1,4 +1,3 @@
-import { shoppingListApi } from '../../app/helper/api-interface';
 import { ShoppingListHelpers } from '../support/helpers';
 
 const closeModalIfOpen = () => {
@@ -10,9 +9,9 @@ const closeModalIfOpen = () => {
 describe('Add Item', () => {
 
     beforeEach(() => {
-        cy.task('resetDatabase')
-        cy.wait(250)
-        cy.visit('/')
+        cy.task('resetDatabase').then(() => {
+            cy.visit('/')
+        })
     })
 
     afterEach(() => {

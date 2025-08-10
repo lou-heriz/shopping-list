@@ -1,11 +1,9 @@
-import { shoppingListApi } from "../../app/helper/api-interface";
-
 describe('Shopping List Checkbox', () => {
 
     beforeEach(() => {
-        cy.task('resetDatabase')
-        cy.wait(250)
-        cy.visit('/')
+        cy.task('resetDatabase').then(() => {
+            cy.visit('/')
+        })
     })
 
     it('should display checkbox for shopping item', () => {

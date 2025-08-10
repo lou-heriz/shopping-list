@@ -1,13 +1,14 @@
 import { defineConfig } from 'cypress'
 import path from 'path'
+import codeCoverageTask from '@cypress/code-coverage/task'
+import fs from 'fs'
 
 export default defineConfig({
     e2e: {
         setupNodeEvents(on, config) {
-            require('@cypress/code-coverage/task')(on, config);
+            codeCoverageTask(on, config);
             on('task', {
                 resetDatabase() {
-                    const fs = require('fs');
                     const testDbPath = path.join(process.cwd(), process.env.LOWDB_PATH || 'test-db.json');
                     const initialData = {
                         items: [
@@ -23,7 +24,10 @@ export default defineConfig({
                     if (!fs.existsSync(testDbPath)) {
                         fs.mkdirSync(path.dirname(testDbPath), { recursive: true });
                     }
-                    fs.writeFileSync(testDbPath, JSON.stringify(initialData, null, 2));
+                    
+                    const tmp = `${testDbPath}.tmp`;
+                    fs.writeFileSync(tmp, JSON.stringify(initialData, null, 2));
+                    fs.renameSync(tmp, testDbPath);
                     return null;
                 }
             });

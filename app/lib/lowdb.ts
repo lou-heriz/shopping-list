@@ -18,12 +18,30 @@ const initialItems: Data = {
     ]
 }
 
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function readWithRetry(db: Low<Data>, attempts = 5, delay = 25) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      await db.read();
+      return;
+    } catch (e: unknown) {
+      lastErr = e;
+      await sleep(delay);
+    }
+  }
+  throw lastErr;
+}
+
 export async function getDb() {
     const filePath = process.env.LOWDB_PATH ?? path.join(process.cwd(), 'db.json');
     const adapter = new JSONFile<Data>(filePath);
     const db = new Low(adapter, initialItems);
-    await db.read();
-    db.data ||= initialItems;
-    await db.write();
+    await readWithRetry(db);
+
+    if (!db.data) db.data = initialItems;
     return db;
 }

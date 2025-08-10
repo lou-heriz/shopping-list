@@ -1,11 +1,9 @@
-import { shoppingListApi } from "../../app/helper/api-interface";
-
 describe('Delete Item', () => {
 
     beforeEach(() => {
-        cy.task('resetDatabase')
-        cy.wait(250)
-        cy.visit('/')
+        cy.task('resetDatabase').then(() => {
+            cy.visit('/')
+        })
     })
 
     it('should display delete buttons for default item', () => {
