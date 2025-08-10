@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { webpack } from "next/dist/compiled/webpack/webpack";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -17,6 +18,11 @@ const nextConfig: NextConfig = {
         },
       });
     }
+    config.plugins.push(
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^(.nyc_output|coverage|cypress|test-results|playwright-report|blob-report)$/,
+      })
+    );
     return config;
   },
   devIndicators: false

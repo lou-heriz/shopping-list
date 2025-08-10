@@ -36,10 +36,15 @@ export function ListProvider({ children }: { children: ReactNode }) {
             purchased: false,
             order: items.length,
         };
-
+        const rollbackItems = [...items];
         setItems(prevItems => [...prevItems, newItem]);
-        await shoppingListApi.addItem(newItem);
         setShowModal(false);
+        try {
+            await shoppingListApi.addItem(newItem);
+        } catch (error) {
+            console.error("Failed to add item: ", error);
+            setItems(rollbackItems);
+        }
     }, [items]);
 
     const closeModal = useCallback(() => {
@@ -47,17 +52,29 @@ export function ListProvider({ children }: { children: ReactNode }) {
     }, []);
 
     const handleDelete = useCallback(async (id: string) => {
+        const rollbackItems = [...items];
         setItems(prevItems => prevItems.filter(item => item.id !== id));
-        await shoppingListApi.deleteItem(id);
-    }, []);
+        try {
+            await shoppingListApi.deleteItem(id);
+        } catch (error) {
+            console.error("Failed to delete item: ", error);
+            setItems(rollbackItems);
+        }
+    }, [items]);
 
     const handleTogglePurchased = useCallback(async (id: string) => {
         const item = items.find(i => i.id === id);
 
         if (!item) return;
+        const rollbackItems = [...items];
 
         setItems(prevItems => prevItems.map(item => item.id === id ? { ...item, purchased: !item.purchased } : item));
-        await shoppingListApi.togglePurchased(item);
+        try {
+            await shoppingListApi.togglePurchased(item);
+        } catch (error) {
+            console.error("Failed to toggle purchased status: ", error);
+            setItems(rollbackItems);
+        }
     }, [items]);
 
     const handleReorder = useCallback(async (reorderedItems: ShoppingItemType[]) => {
@@ -65,11 +82,16 @@ export function ListProvider({ children }: { children: ReactNode }) {
             ...item,
             order: index
         }));
-
+        const rollbackItems = [...items];
         setItems(itemsWithUpdatedOrder);
 
-        await shoppingListApi.reorderItems(itemsWithUpdatedOrder);
-    }, []);
+        try {
+            await shoppingListApi.reorderItems(itemsWithUpdatedOrder);
+        } catch (error) {
+            console.error("Failed to reorder items: ", error);
+            setItems(rollbackItems);
+        }
+    }, [items]);
 
     const stateMemo = useMemo(() => ({ items, showModal }), [items, showModal]);
     const actionMemo = useMemo(

@@ -28,4 +28,15 @@ describe('Shopping List Checkbox', () => {
         cy.focused().type(' ')
         cy.get('li').first().find('input[type="checkbox"]').should('be.checked')
     })
+
+    it('should rollback items when checkbox toggle fails', () => {
+        cy.intercept('PATCH', '/api/shopping-list/item', {
+            statusCode: 500,
+            body: { error: 'Failed to toggle item' }
+        }).as('toggleItem');
+
+        cy.get('li').first().find('input[type="checkbox"]').click();
+        cy.wait('@toggleItem');
+        cy.get('li').first().find('input[type="checkbox"]').should('not.be.checked');
+    })
 })
