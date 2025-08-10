@@ -2,7 +2,7 @@
 import ShoppingItem from "./ShoppingItem";
 import { ShoppingItemType } from "../types";
 import { shoppingListApi } from "../helper/api-interface";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AddItemButton from "./AddItemButton";
 import Modal from "./Modal";
 import AddItemForm from "./AddItemForm";
@@ -13,7 +13,8 @@ export default function ShoppingList() {
 
     const [items, setItems] = useState<ShoppingItemType[]>([]);
     const [showModal, setShowModal] = useState(false);
-
+    const totalCost = useMemo(() => items.reduce((total, item) => total + item.price, 0).toFixed(2), [items]);
+    
     useEffect(() => {
         const loadItems = async () => {
             try {
@@ -82,7 +83,7 @@ export default function ShoppingList() {
             <h1 className="text-4xl font-bold pb-8 text-center">Shopping List</h1>
             <div className="mb-4 p-4 bg-gray-50 rounded-lg items-center flex flex-col gap-2">
                 <div className="flex justify-between items-center text-lg">
-                    Total Cost: £{items.reduce((total, item) => total + item.price, 0).toFixed(2)}
+                    Total Cost: £{totalCost}
                 </div>
             </div>
             <Reorder.Group aria-label="Shopping List" values={items} onReorder={handleReorder}>
