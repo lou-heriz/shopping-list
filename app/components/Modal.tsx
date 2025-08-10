@@ -9,6 +9,8 @@ export default function Modal({ children }: { children: React.ReactNode }) {
             onClick={closeModal}
         >
             <div
+                role="dialog"
+                aria-modal="true"
                 className="bg-white rounded shadow-lg p-6 w-80% mx-auto"
                 onClick={(e) => e.stopPropagation()}
             >
