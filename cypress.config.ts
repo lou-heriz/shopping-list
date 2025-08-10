@@ -20,6 +20,9 @@ export default defineConfig({
                             { id: "6", name: "Maple Syrup", price: 2, purchased: false },
                         ]
                     };
+                    if (!fs.existsSync(testDbPath)) {
+                        fs.mkdirSync(path.dirname(testDbPath), { recursive: true });
+                    }
                     fs.writeFileSync(testDbPath, JSON.stringify(initialData, null, 2));
                     return null;
                 }
