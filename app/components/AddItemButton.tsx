@@ -5,7 +5,7 @@ export default function AddItemButton({ openModal }: { openModal: () => void }) 
         <>
             <button
                 onClick={openModal}
-                className="bg-blue-500 text-white py-2 rounded w-full h-11"
+                className="bg-[#0050C7] text-white py-2 rounded w-full h-11"
             >
                 + Add Item
             </button>
