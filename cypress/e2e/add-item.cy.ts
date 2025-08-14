@@ -12,7 +12,6 @@ describe('Add Item', () => {
         cy.task('resetDatabase').then(() => {
             cy.visit('/')
         })
-        console.log("--starting test--")
     })
 
     afterEach(() => {
