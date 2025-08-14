@@ -1,19 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { useListActions } from '../provider/ListContext';
 
-interface AddItemFormProps {
-    onSubmit: (name: string, price: number) => void;
-    onCancel: () => void;
-}
-
-export default function AddItemForm({ onSubmit, onCancel }: AddItemFormProps) {
+export default function AddItemForm() {
     const [name, setName] = useState('');
     const [price, setPrice] = useState(1);
-
+    const { handleAddItem, closeModal } = useListActions();
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit(name.trim(), price);
+        handleAddItem(name.trim(), price);
         setName('');
         setPrice(1);
     };
@@ -67,7 +63,7 @@ export default function AddItemForm({ onSubmit, onCancel }: AddItemFormProps) {
             <div className="flex gap-2 justify-end mt-4">
                 <button
                     type="button"
-                    onClick={onCancel}
+                    onClick={closeModal}
                     className="text-sm text-gray-600 underline px-4 py-2"
                     aria-label="Cancel adding item"
                 >

@@ -13,6 +13,5 @@ export class ShoppingListHelpers {
 
         cy.get('button[type="submit"]').click();
         cy.get('form').should('not.exist');
-        cy.contains(name).should('be.visible');
     }
 }

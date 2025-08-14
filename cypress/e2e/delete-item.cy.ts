@@ -1,11 +1,9 @@
-import { shoppingListApi } from "../../app/helper/api-interface";
-
 describe('Delete Item', () => {
 
     beforeEach(() => {
-        cy.task('resetDatabase')
-        cy.wait(250)
-        cy.visit('/')
+        cy.task('resetDatabase').then(() => {
+            cy.visit('/')
+        })
     })
 
     it('should display delete buttons for default item', () => {
@@ -23,5 +21,16 @@ describe('Delete Item', () => {
     it('should be focusable', () => {
         cy.get('li').first().find('button[id^="delete-button-"]').focus()
         cy.focused().children().first().should('have.attr', 'alt', 'Delete')
+    })
+
+    it('should rollback items when delete item fails', () => {
+        cy.intercept('DELETE', '/api/shopping-list/item', {
+            statusCode: 500,
+            body: { error: 'Failed to delete item' }
+        }).as('deleteItem');
+
+        cy.get('li').first().find('button[id^="delete-button-"]').click();
+        cy.wait('@deleteItem');
+        cy.get('li').first().find('button[id^="delete-button-"]').should('be.visible');
     })
 })

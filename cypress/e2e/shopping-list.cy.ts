@@ -3,9 +3,9 @@ import { ShoppingListHelpers } from "../support/helpers";
 describe('Shopping List App', () => {
 
     beforeEach(() => {
-        cy.task('resetDatabase')
-        cy.wait(250)
-        cy.visit('/')
+        cy.task('resetDatabase').then(() => {
+            cy.visit('/')
+        })
     })
 
     it('should display the shopping list title', () => {
